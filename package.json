@@ -1,0 +1,22 @@
+{
+  "name": "prueba_tecnica",
+  "version": "1.0.0",
+  "description": "API restful para registro de clientes y compras",
+  "main": "index.js",
+  "scripts": {
+    "start": "./index.js",
+    "dev": "nodemon ./index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.3.2",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.14"
+  }
+}
