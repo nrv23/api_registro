@@ -106,7 +106,9 @@ class PurchaseController {
             }
 
         } catch (error) {
-            console.log(error);
+            res.status(500).json({
+                msg: 'Hubo un error en la búsqueda'
+            })
         }
 
     }
