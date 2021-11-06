@@ -1,4 +1,5 @@
 const Client = require("../models/Client");
+const { validateClient } = require("../validacion");
 
 
 class ClientController {
@@ -11,12 +12,20 @@ class ClientController {
     async addNewClient(req,res) {
 
         try {
+
+            console.log(req.body);
             
             const {
                 body: {
                     cedula,nombre,email = '',telefono
                 }
             } = req;
+
+            const errors = validateClient({cedula,nombre,email,telefono});
+
+            if(errors.length > 0) return res.status(400).json({ data : {
+                errores: errors
+            }})
 
             const client = new Client( cedula,nombre,email,telefono);
             const response = await client.addNewClient(client.getDni(),client.getName(),client.getEmail(),client.getPhone())
@@ -33,9 +42,11 @@ class ClientController {
 
            
         } catch (error) {
+
             if(error.errno === 1062) {
+      
                 return res.status(400).json({
-                    msg: 'El ciente que intenta ingresar ya existe.Pruebe con otro'
+                    msg: 'No se pueden agregar dos clientes con la misma cédula'
                 })
             } else {
                 return res.status(500).json({
@@ -53,15 +64,15 @@ class ClientController {
                 params : {cedula}
             } = req;
                 
-            if(cedula === ''){
+            if(cedula.length > 12 ){
                 return res.status(400).json({
-                    msg: 'El parámetro de cédula es necesario para la búsqueda'
+                    msg: 'El parámetro de cédula debe contener máximo 12 caracteres'
                 })
             }
 
             const client = new Client(cedula);
             const response = await client.getClient(client.getDni());
-
+            
             if(response[0] && response[0][0]) {
 
                 return res.status(200).json({

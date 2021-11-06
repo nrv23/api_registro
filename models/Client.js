@@ -65,6 +65,15 @@ class Client {
 
         return query.executeQuery(query.getSql(),query.getParams());
     }
+
+    getClientbyId(clientId) {
+
+        const sql = 'CALL getClientbyId(?)';
+        const params = [clientId]
+        const query = new Query(sql,params);
+
+        return query.executeQuery(query.getSql(),query.getParams());
+    }
 }
 
 module.exports = Client;

@@ -3,7 +3,7 @@ const Client = require("./Client")
 
 class Purchase extends Client {
 
-    constructor(nroFac = '',dni= '',trade= '',amount= '',product= '',quantity= '') {
+    constructor(clientId='',nroFac = '',dni= '',trade= '',amount= '',product= '',quantity= '') {
         super(dni);
 
         this.setDni(dni);
@@ -12,6 +12,12 @@ class Purchase extends Client {
         this.setAmount(amount);
         this.setProduct(product);
         this.setQuantity(quantity);
+        this.setClientId(clientId);
+    }
+
+    setClientId(clientId) {
+
+        this.clientId =clientId;
     }
 
     setDni(dni) {
@@ -44,6 +50,10 @@ class Purchase extends Client {
     }
 
 
+    getClientId(){ 
+
+        return this.clientId;
+    }
 
     getDni() {
 
@@ -83,10 +93,10 @@ class Purchase extends Client {
         return query.executeQuery(query.getSql(),query.getParams());
     }
 
-    addNewPurchase(nroFac,dni,trade,amount,product,quantity) {
+    addNewPurchase(clientId,nroFac,dni,trade,amount,product,quantity) {
 
-        const sql = 'CALL addPurchase(?,?,?,?,?,?)';
-        const params = [nroFac,dni,trade,amount,product,quantity];
+        const sql = 'CALL addPurchase(?,?,?,?,?,?,?)';
+        const params = [clientId,nroFac,dni,trade,amount,product,quantity];
         const query = new Query(sql,params);
 
         return query.executeQuery(query.getSql(),query.getParams());
